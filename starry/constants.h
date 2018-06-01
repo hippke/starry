@@ -2,8 +2,16 @@
 Defines constants used throughout the code.
 
 */
+#ifndef _STARRY_CONSTANTS_H_
 #include <vector>
 using std::vector;
+
+#ifndef STARRY_IGNORE_ANNOYING_WARNINGS
+#define STARRY_IGNORE_ANNOYING_WARNINGS
+#ifdef _MSC_VER
+  #pragma warning(disable : 4503)
+#endif
+#endif
 
 // Gradient size
 #ifndef STARRY_NGRAD
@@ -68,4 +76,6 @@ typedef boost::multiprecision::number<mp_backend, boost::multiprecision::et_off>
 #define LSUN                                    3.828e26                        // Solar luminosity in W/m^2
 #define RJUP                                    7.1492e7                        // Radius of Jupiter in m
 #define DEGREE                                  (M_PI / 180.)                   // One degree in radians
+#endif
+
 #endif

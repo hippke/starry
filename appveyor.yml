@@ -21,6 +21,7 @@ install:
     conda update -q conda
     conda info -a
     conda install -q -c conda-forge conda-build numpy scipy matplotlib setuptools pybind11 pytest<3.2 pip
+    pip install starry_maps
 build_script:
 - ps: python setup.py install
 test_script:

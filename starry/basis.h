@@ -100,7 +100,7 @@ namespace basis {
         int i, j, k, p, q, v;
         int N = (lmax + 1) * (lmax + 1);
         double coeff;
-        Matrix<double> Ylm1(lmax+1, lmax+1), Ylm2(lmax+1, lmax+1);  //[lmax + 1][lmax + 1][2];
+        Matrix<double> Ylm1(lmax+1, lmax+1), Ylm2(lmax+1, lmax+1);
         Matrix<double> A1Dense = Matrix<double>::Zero(N, N);
 
         // Iterate over the spherical harmonic orders and degrees
@@ -112,8 +112,6 @@ namespace basis {
                     for (j=0;j<l+1;j++){
                         Ylm1(i, j) = 0.;
                         Ylm2(i, j) = 0.;
-                        //Ylm[i][j][0] = 0.;
-                        //Ylm[i][j][1] = 0.;
                     }
                 }
                 for (k=0; k<l+1; k++) {
@@ -125,8 +123,6 @@ namespace basis {
                                     Ylm1(i, j) += coeff;
                                 } else if (k == 1) {
                                     Ylm2(i, j) += coeff;
-                                    // 1 or z
-                                    //Ylm[i][j][k] += coeff;
                                 } else if ((k % 2) == 0) {
                                     // Even power of z
                                     for (p=0; p<k+1; p+=2) {
