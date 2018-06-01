@@ -20,7 +20,7 @@ install:
     conda config --set always_yes yes --set changeps1 no
     conda update -q conda
     conda info -a
-    conda install -q -c conda-forge conda-build numpy scipy matplotlib setuptools pybind11 pytest<3.2 pip
+    conda install -q -c conda-forge conda-build numpy scipy matplotlib setuptools pybind11 pytest<3.2 pip healpy
     pip install starry_maps
 build_script:
 - ps: python setup.py install
