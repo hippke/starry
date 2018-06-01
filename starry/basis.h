@@ -100,7 +100,7 @@ namespace basis {
         int i, j, k, p, q, v;
         int N = (lmax + 1) * (lmax + 1);
         double coeff;
-        Matrix<double> Ylm1(lmax+1, lmax+1), Ylm1(lmax+1, lmax+1);  //[lmax + 1][lmax + 1][2];
+        Matrix<double> Ylm1(lmax+1, lmax+1), Ylm2(lmax+1, lmax+1);  //[lmax + 1][lmax + 1][2];
         Matrix<double> A1Dense = Matrix<double>::Zero(N, N);
 
         // Iterate over the spherical harmonic orders and degrees
