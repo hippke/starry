@@ -100,7 +100,7 @@ namespace basis {
         int i, j, k, p, q, v;
         int N = (lmax + 1) * (lmax + 1);
         double coeff;
-        double Ylm[lmax + 1][lmax + 1][2];
+        Matrix<double> Ylm1(lmax+1, lmax+1), Ylm1(lmax+1, lmax+1);  //[lmax + 1][lmax + 1][2];
         Matrix<double> A1Dense = Matrix<double>::Zero(N, N);
 
         // Iterate over the spherical harmonic orders and degrees
@@ -110,8 +110,10 @@ namespace basis {
                 // Compute the contracted polynomial tensor
                 for (i=0;i<l+1;i++) {
                     for (j=0;j<l+1;j++){
-                        Ylm[i][j][0] = 0.;
-                        Ylm[i][j][1] = 0.;
+                        Ylm1(i, j) = 0.;
+                        Ylm2(i, j) = 0.;
+                        //Ylm[i][j][0] = 0.;
+                        //Ylm[i][j][1] = 0.;
                     }
                 }
                 for (k=0; k<l+1; k++) {
@@ -119,18 +121,21 @@ namespace basis {
                         for (j=0; j<i-k+1; j++) {
                             coeff = Lijk(l, m, i, j, k);
                             if (coeff) {
-                                if ((k == 0) || (k == 1)) {
+                                if (k == 0) {
+                                    Ylm1(i, j) += coeff;
+                                } else if (k == 1) {
+                                    Ylm2(i, j) += coeff;
                                     // 1 or z
-                                    Ylm[i][j][k] += coeff;
+                                    //Ylm[i][j][k] += coeff;
                                 } else if ((k % 2) == 0) {
                                     // Even power of z
                                     for (p=0; p<k+1; p+=2) {
                                         for (q=0; q<p+1; q+=2) {
                                             if ((p / 2) % 2 == 0)
-                                                Ylm[i - k + p][j + q][0] +=
+                                                Ylm1(i - k + p, j + q) +=
                                                     C(p, q, k) * coeff;
                                             else
-                                                Ylm[i - k + p][j + q][0] -=
+                                                Ylm1(i - k + p, j + q) -=
                                                     C(p, q, k) * coeff;
                                         }
                                     }
@@ -139,10 +144,10 @@ namespace basis {
                                     for (p=0; p<k+1; p+=2) {
                                         for (q=0; q<p+1; q+=2) {
                                             if ((p / 2) % 2 == 0)
-                                                Ylm[i - k + p + 1][j + q][1] +=
+                                                Ylm2(i - k + p + 1, j + q) +=
                                                     C(p, q, k - 1) * coeff;
                                             else
-                                                Ylm[i - k + p + 1][j + q][1] -=
+                                                Ylm2(i - k + p + 1, j + q) -=
                                                     C(p, q, k - 1) * coeff;
                                         }
                                     }
@@ -156,12 +161,12 @@ namespace basis {
                 v = 0;
                 for (i=0; i<l+1; i++) {
                     for (j=0; j<i+1; j++) {
-                        if (std::abs(Ylm[i][j][0]) > tol)
-                            A1Dense(v, n) = Ylm[i][j][0];
+                        if (std::abs(Ylm1(i, j)) > tol)
+                            A1Dense(v, n) = Ylm1(i, j);
                         v++;
                         if (j < i) {
-                            if (std::abs(Ylm[i][j][1]) > tol)
-                                A1Dense(v, n) = Ylm[i][j][1];
+                            if (std::abs(Ylm2(i, j)) > tol)
+                                A1Dense(v, n) = Ylm2(i, j);
                             v++;
                         }
                     }
