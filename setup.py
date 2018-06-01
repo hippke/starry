@@ -78,7 +78,7 @@ class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
 
     c_opts = {
-        'msvc': ['/EHsc'],
+        'msvc': ['/EHsc', '/D_USE_MATH_DEFINES'],
         'unix': [],
     }
 
@@ -117,7 +117,7 @@ setup(
     description='Analytic occultation light curves for astronomy.',
     long_description='',
     license='GPL',
-    packages=['starry'],
+    # packages=['starry'],
     ext_modules=ext_modules,
     install_requires=['matplotlib',
                       'starry_maps>=0.0.10',
