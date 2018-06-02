@@ -4,6 +4,10 @@
 #include <pybind11/pybind11.h>
 #include <stdlib.h>
 
+#ifdef MSVC
+  #pragma warning(disable : 4503)
+#endif
+
 // MAGIC: Include our starry interface twice,
 // once with no derivs and once with derivs.
 #undef STARRY_AUTODIFF

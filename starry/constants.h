@@ -6,13 +6,6 @@ Defines constants used throughout the code.
 #include <vector>
 using std::vector;
 
-#ifndef STARRY_IGNORE_ANNOYING_WARNINGS
-#define STARRY_IGNORE_ANNOYING_WARNINGS
-#ifdef _MSC_VER
-  #pragma warning(disable : 4503)
-#endif
-#endif
-
 // Gradient size
 #ifndef STARRY_NGRAD
 #define STARRY_NGRAD                            43
