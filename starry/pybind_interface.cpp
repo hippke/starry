@@ -1,12 +1,12 @@
+#ifdef MSVC
+  #pragma warning(disable : 4503)
+#endif
+
 // DEBUG: This will throw Assertion errors if we've messed up
 // any Eigen operations. Remove this once the code is stable.
 #undef NDEBUG
 #include <pybind11/pybind11.h>
 #include <stdlib.h>
-
-#ifdef MSVC
-  #pragma warning(disable : 4503)
-#endif
 
 // MAGIC: Include our starry interface twice,
 // once with no derivs and once with derivs.
