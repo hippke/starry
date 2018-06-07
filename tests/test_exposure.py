@@ -21,7 +21,7 @@ def test_exposure():
     planet = Planet(r=0.01, a=60, inc=89.5, porb=50)
 
     # Instantiate the system
-    system = System([star, planet], exposure_time=0)
+    # system = System([star, planet], exposure_time=0)
 
     # # Compute the flux with different exposure times
     # for exptime in [0.001, 0.01, 0.1]:
