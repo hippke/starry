@@ -10,18 +10,18 @@ def test_exposure():
     time = np.linspace(-0.25, 0.25, npts)
 
     # Manually integrate w/ this many points (clearly ridiculous!)
-    # nexppts = 10000
+    nexppts = 10000
 
-    # # Limb-darkened star
-    # star = Star()
-    # star.map[1] = 0.4
-    # star.map[2] = 0.26
+    # Limb-darkened star
+    star = Star()
+    star.map[1] = 0.4
+    star.map[2] = 0.26
 
-    # # Hot jupiter
-    # planet = Planet(r=0.01, a=60, inc=89.5, porb=50)
+    # Hot jupiter
+    planet = Planet(r=0.01, a=60, inc=89.5, porb=50)
 
-    # # Instantiate the system
-    # system = System([star, planet], exposure_time=0)
+    # Instantiate the system
+    system = System([star, planet], exposure_time=0)
 
     # # Compute the flux with different exposure times
     # for exptime in [0.001, 0.01, 0.1]:
