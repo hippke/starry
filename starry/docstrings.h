@@ -53,6 +53,24 @@ namespace docstrings {
                 is particularly convenient for constant or purely limb-darkened
                 maps, whose disk-integrated intensity is always equal to unity.
 
+            .. warning:: Note that the total degree of the map can never
+                exceed :py:obj:`lmax`. For example, if :py:obj:`lmax=5` and
+                you set spherical harmonic coefficients up to :py:obj:`lmax=3`,
+                you may only set limb darkening coefficients up to second
+                order.
+
+            As of version 0.2.1, :py:obj:`starry` supports multi-wavelength
+            maps via the :py:obj:`nwav` keyword argument. If this argument is set
+            to a value greater than one, light curves will be computed for each
+            wavelength bin of the map. All coefficients at a given value of
+            :py:obj:`l, m` and all limb darkening coefficients at a given value
+            of :py:obj:`l` are now *vectors*, with one value per wavelength
+            bin. Functions like :py:meth:`flux()` and :py:meth:`__call__()` will
+            return one value per wavelength bin, and gradients will be
+            computed at every wavelength. Note that this feature is still
+            **experimental**, so please raise an issue on GitHub if you run
+            into any trouble.
+
             Args:
                 lmax (int): Largest spherical harmonic degree \
                     in the surface map. Default 2.
@@ -354,8 +372,7 @@ namespace docstrings {
             :py:obj:`body.parameter`, where :py:obj:`body` is :py:obj:`A`
             for the primary and :py:obj:`b`, :py:obj:`c`, :py:obj:`d`, etc. for
             the secondaries. The :py:obj:`parameter` label is the name of the
-            parameter; for map coefficients, this takes the form
-            :py:obj:`Y_{l,m}` or :py:obj:`u_{l}`.
+            parameter.
 
             .. note:: Users must call the :py:obj:`compute` method of the
                 :py:class:`System` object with :py:obj:`gradient=True`
@@ -435,6 +452,20 @@ namespace docstrings {
             spherical harmonic and limb darkening coefficients in the same
             way. Refer to the documentation of :py:class:`Map` for all
             options.
+
+            .. note:: When specifying the map coefficients of a
+                :py:class:`Secondary` body, we need to be careful about the
+                **frame** in which the map is defined. :py:obj:`starry` was
+                developed with exoplanet secondary eclipses in mind, so the map
+                coefficients correspond to the map that would be visible at
+                **opposition**, i.e., at "secondary eclipse" for an exoplanet
+                in an edge-on orbit. For bodies in inclined/rotated orbits,
+                the map coefficients correspond to the map that would be visible
+                to an observer located down the :math:`z` axis, along the plane of the
+                orbit. This means the **map coefficients are independent of the
+                inclination or longitude of ascending node of the orbit.**
+                If this is all very confusing, check out the `tutorial on
+                orbital geometry <tutorials/geometry.html>`_.
 
             .. autoattribute:: r
             .. autoattribute:: L
@@ -574,7 +605,7 @@ namespace docstrings {
         const char* gradient = R"pbdoc(
             The gradient of the systems's light curve. This is a dictionary of
             vectors (:py:obj:`nwav = 1`) or matrices (:py:obj:`nwav > 1`).
-            See the docstring of :py:attr:`Body.gradient` for more details.
+            See the docstring of :py:attr:`Primary.gradient` for more details.
 
             .. note:: Users should call :py:meth:`compute` first.
         )pbdoc";

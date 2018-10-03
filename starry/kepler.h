@@ -966,11 +966,12 @@ namespace kepler {
     }
 
     /**
-    Initial map rotation angle in degrees. The map is defined at the
+    Map rotation angle in degrees at the reference time.
+    The map is defined at the
     eclipsing configuration (full dayside as seen by an
     observer viewing the system edge-on), so let's find the
     angle by which we need to rotate the map initially to
-    make this happen. This overrides `` in
+    make this happen. This overrides `computeTheta0` in
     the Body class.
 
     */
@@ -1681,7 +1682,7 @@ namespace kepler {
                    primary->angvelrot_deg * units::DayToSeconds));
 
         // dF / d{y} and dF / d{u} from the map derivs
-        int sz = primary->dF.size() - 4;
+        int sz = primary->dF.rows() - 4;
         primary->dflux_tot.block(g, 0, sz, primary->nwav) =
             primary->dF.block(4, 0, sz, primary->nwav);
 
@@ -1823,7 +1824,7 @@ namespace kepler {
                           units::DayToSeconds));
 
             // dF / d{y} and dF / d{u} from the map derivs
-            int sz = secondary->dF.size() - 4;
+            int sz = secondary->dF.rows() - 4;
             secondary->dflux_tot.block(g, 0, sz, secondary->nwav) =
                 secondary->L * secondary->dF.block(4, 0, sz, secondary->nwav);
 
@@ -1878,7 +1879,7 @@ namespace kepler {
         g++;
 
         // dF / d{y} and dF / d{u}
-        int sz = primary->dF.size() - 4;
+        int sz = primary->dF.rows() - 4;
         primary->dflux_cur.block(g, 0, sz, primary->nwav) +=
             primary->dF.block(4, 0, sz, primary->nwav) -
             primary->dflux_tot.block(g, 0, sz, primary->nwav);
@@ -2200,7 +2201,7 @@ namespace kepler {
             g++;
 
             // dF / d{y} and dF / d{u}
-            int sz = secondary->dF.size() - 4;
+            int sz = secondary->dF.rows() - 4;
             secondary->dflux_cur.block(g, 0, sz, secondary->nwav) +=
                 secondary->L * secondary->dF.block(4, 0, sz, secondary->nwav) -
                 secondary->dflux_tot.block(g, 0, sz, secondary->nwav);

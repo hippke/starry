@@ -9,8 +9,8 @@ CHECK_RERUN = grep Rerun starry.log
 FIGURES     = $(patsubst %.py,%.pdf,$(wildcard figures/*.py))
 SOURCES     = $(wildcard ../src/*.[ch])
 TECTONIC    = $(shell command -v tectonic >/dev/null && echo true || echo false )
-TEXFILE     = "\def\hideedits{}\input{starry}"
-#TEXFILE     = "\input{starry}"
+#TEXFILE     = "\def\hideedits{}\input{starry}"
+TEXFILE     = "\input{starry}"
 
 default: starry.pdf
 
@@ -30,6 +30,9 @@ starry.pdf: starry.tex stylez.tex starry.bib $(FIGURES) $(SOURCES)
 		( ${CHECK_RERUN} && ${LATEX} ${TEXFILE} ) || echo "Done.";\
 	fi
 	# Update the proofs page in the docs
+	sleep 1
+	echo "<<STARRY.TEX LOGFILE TAIL>>"
+	tail starry.log
 	python genproofs.py
 
 clean:

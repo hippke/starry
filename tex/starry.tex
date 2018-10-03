@@ -11,9 +11,9 @@
     \textbf{STARRY}: Analytic Occultation Light Curves
 }
 
-\author[0000-0002-0296-3826]{Rodrigo Luger}
-\email{rodluger@uw.edu}
-\affil{Department~of~Astronomy, University~of~Washington, Seattle, WA}
+\author[0000-0002-0296-3826]{Rodrigo Luger}\altaffiliation{Flatiron Fellow}
+\email{rluger@flatironinstitute.org}
+\affil{Center~for~Computational~Astrophysics, Flatiron~Institute, New~York, NY}
 \affil{Virtual~Planetary~Laboratory, University~of~Washington, Seattle, WA}
 %
 \author[0000-0002-0802-9145]{Eric Agol}\altaffiliation{Guggenheim Fellow}
@@ -478,8 +478,6 @@ an angle $\theta$ and an arbitrary axis of rotation $\bvec{u}$. Follow the link
 next to Figure~\ref{fig:ylms} to view an animation of the spherical harmonics
 rotating about the $y$-axis, computed from \eq{rotation}.
 
-% HACK
-\pagebreak
 
 % ==============================================================================
 % ------------------------------------------------------------------------------
@@ -1585,15 +1583,16 @@ input parameters:
  'xo': array([-0.00356856]),
  'yo': array([0.00076157]),
  'ro': array([-0.35638527]),
- 'Y_{0,0}': array([0.99]),
- 'Y_{1,-1}': array([-0.00173205]),
- 'Y_{1,0}': array([0.98432307]),
- 'Y_{1,1}': array([-0.57029919])}
+ 'y': array([[ 0.99      ],
+             [-0.00173205],
+             [ 0.98432307],
+             [-0.57029919]]),
+ 'u': array([])}
 \end{lstlisting}
 %
 These are the derivatives with respect to
 the rotational phase, the position and radius of the occultor,
-and each of the map coefficients.
+and each of the spherical harmonic and limb darkening coefficients.
 %
 \begin{figure}[p!]
     \begin{centering}
@@ -1884,7 +1883,7 @@ median model fit to the data. Figure \ref{fig:hd189_mcmc_corner}
 shows the marginalized posteriors and covariances of our four model parameters, as
 well as the latitude ($\hat{\phi}$) and longitude ($\hat{\theta}$) of the hotspot
 relative to the substellar
-point. A map corresponding to the median model is plotted at the top right,
+point. A map corresponding to \edited{the maximum likelihood model} is plotted at the top right,
 showing a statistically significant eastward
 offset in the location of the hotspot in agreement with previous studies
 \citep{Knutson2007, Majeau2012, deWit2012}. There is also evidence for a slight northward offset,
@@ -2064,8 +2063,7 @@ computation time by at least an order of magnitude.
 The occultation formalism developed in this paper applies specifically to the
 case of a single occultor, so \starry cannot at present handle mutual occultations
 involving more than two bodies; \edited{if a three-body event occurs, the computed
-flux will be incorrect}
-. However, even for an arbitrary number of bodies
+flux will be incorrect}. However, even for an arbitrary number of bodies
 the problem is still analytic, since Green's theorem may be employed in the same
 way, but instead evaluating the line integrals along the more complex network of
 arcs defining the edges of the visible portion of the body's surface. This was
@@ -3294,7 +3292,7 @@ converge rapidly, so we use those expressions to evaluate the initial conditions
 
 % ------------------------------------------------------------------------------
 \subsubsection{Evaluating $\mathcal{I}_v$ and $\mathcal{J}_v$ for $k^2 \ge 1$}
-\label{app:IJklt1}
+\label{app:IJkge1}
 % ------------------------------------------------------------------------------
 
 In the $k^2 \ge 1$ ($b+r \le 1$) limit, the expression for $\mathcal{I}_v$ is
